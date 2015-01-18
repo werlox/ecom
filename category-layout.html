@@ -830,11 +830,20 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-        $(function(){
-       $('.btn-quickview').live('click',function(){
-       $('#product-details-modal').show();
-       $('#product-details-modal').hide();
-          });
+      $(function(){
+        $(".btn-quickview").live('click',function(){
+        $("#product-details-modal).show();
+        $("#product-details-modal").hide();
+      });
+
+      // $('.dropdown-tree').click(function() {
+      //   $( this ).toggleClass( 'open-tree' );
+      // });
+     </script>
+     <script>
+$( ".dropdown-tree" ).click(function() {
+  $( ".category-level-2" ).slideToggle( "slow" );
+});
      </script>
   </body>
 </html>
