@@ -1,22 +1,38 @@
-<!DOCTYPE html>
 <?php
 require_once "nci/session.php"; 
 require_once "nci/dbc.php";
 require_once "nci/func.php";
+$set = 0;
 
+if (isset($_GET['id'])) {
+$set = 1;
+$cid = $_GET['id'];
+$item_sql = mysql_query("select * from items where cat_id = '$cid'");
+}
+else{
+$cid = '-1';  
+$item_sql = mysql_query("select * from items");
+}
+
+  
+  $catag = mysql_fetch_array(mysql_query("select * from categories where cat_id = '$cid'"));
 
 ?>
-
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Listings</title>
+    <title><?php echo $catag['cat_name']; ?></title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style1.css" rel="stylesheet">
+    <link href="css/skin-1.css" rel="stylesheet">
+    <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+    <link href="ion.checkRadio-1.1.0/css/ion.checkRadio.css" rel="stylesheet">
+    <link href="ion.checkRadio-1.1.0/css/ion.checkRadio.cloudy.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -25,7 +41,23 @@ require_once "nci/func.php";
     <![endif]-->
   </head>
   <body>
-    <div class="container">
+    <?php include "navbar.php"; ?>
+
+
+  
+</div>
+    <div class="container main-container headerOffset">
+
+      <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+          <ul class="breadcrumb">
+            <li> <a href="index.html">Home</a> </li>
+            <li> <a href="category-layout.html">MEN COLLECTION</a> </li>
+            <li> <a href="sub-category-layout.html">TSHIRT</a> </li>
+            <li class="active">Lorem ipsum dolor sit amet </li>
+          </ul>
+        </div>
+      </div>
       <div class="row"> 
       
       <!--left column-->
@@ -39,31 +71,21 @@ require_once "nci/func.php";
             </div>
             <div id="collapseCategory" class="panel-collapse collapse in">
               <div class="panel-body">
+               <?php $sql = mysql_query("select * from categories where cat_parent_id = 0 order by cat_order");
+                  while ($catmain = mysql_fetch_array($sql)) {?>
                 <ul class="nav nav-pills nav-stacked tree">
-                <?php  category_tree(); ?>
-                  
-                  <li class="active dropdown-tree open-tree"> <a class="dropdown-tree-a"> <span class="badge pull-right">42</span> WOMEN COLLECTION </a>
+                  <li class="active dropdown-tree open-tree"> <a class="dropdown-tree-a"> <span class="badge pull-right">42</span> <?php echo $catmain['cat_name']; ?> </a>
                     <ul class="category-level-2 dropdown-menu-tree">
-                      <li class="dropdown-tree"> <a class="dropdown-tree-a" href="sub-category.html"> Tshirt</a> </li>
-                      <li> <a> Shoes</a> </li>
-                      <li> <a> Shirt</a> </li>
-                      <li> <a>T shirt</a> </li>
-                      <li> <a href="sub-category.html"> Shirt</a> </li>
-                      <li> <a href="sub-category.html">Fragrances</a> </li>
-                      <li> <a href="sub-category.html">Scarf</a> </li>
-                      <li> <a href="sub-category.html">Sandal</a> </li>
-                      <li> <a href="sub-category.html">Underwear</a> </li>
-                      <li> <a href="sub-category.html">Winter Collection</a> </li>
-                      <li> <a href="sub-category.html">Men Accessories</a> </li>
+                      <?php 
+                      $pcat = $catmain['cat_id'];
+                      $ssql = mysql_query("select * from categories where cat_parent_id = $pcat order by cat_order");
+                      while ($catsub = mysql_fetch_array($ssql)) {?>
+                      <li> <a href="listing.php?id=<?php echo $catsub['cat_id']; ?>"><?php echo $catsub['cat_name']; ?></a> </li>
+                      <?php } ?>    
                     </ul>
                   </li>
-                  <li> <a href="#"> <span class="badge pull-right">42</span> MEN COLLECTION </a> </li>
-                  <li> <a href="#"> <span class="badge pull-right">42</span> Baby &amp; Kids </a> </li>
-                  <li> <a href="#"> <span class="badge pull-right">42</span> Home &amp; Kitchen </a> </li>
-                  <li> <a href="#"> <span class="badge pull-right">42</span> Baby &amp; Kids </a> </li>
-                  <li> <a href="#"> <span class="badge pull-right">42</span> More Stores </a> </li>
-                  <li> <a href="#"> <span class="badge pull-right">42</span> Offers Zone </a> </li>
-                </ul>
+                  </ul>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -349,114 +371,66 @@ require_once "nci/func.php";
       <!--right column-->
       <div class="col-lg-9 col-md-9 col-sm-12">
         <div class="w100 clearfix category-top">
-          <h2> MEN COLLECTION </h2>
-          <div class="categoryImage"> <img src="images/category.jpg" class="img-responsive" alt="img"> </div>
+          <h2> <?php echo $catag['cat_name']; ?> </h2>
+          <div class="categoryImage"> <img src="images/cat_img/<?php echo $catag['cat_image']; ?>" class="img-responsive" alt="img"> </div>
         </div>
         <!--/.category-top-->
         
         <div class="row subCategoryList clearfix">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center ">
-            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category.html"><img src="images/product/3.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> T shirt </span></a></div>
+            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category-layout.html"><img src="images/product/3.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> T shirt </span></a></div>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center">
-            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category.html"><img src="images/site/casual.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> Shirt </span></a></div>
+            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category-layout.html"><img src="images/site/casual.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> Shirt </span></a></div>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center">
-            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category.html"><img src="images/site/shoe.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> shoes </span></a></div>
+            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category-layout.html"><img src="images/site/shoe.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> shoes </span></a></div>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center">
-            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category.html"><img src="images/site/jewelry.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> Accessories </span></a></div>
+            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category-layout.html"><img src="images/site/jewelry.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> Accessories </span></a></div>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center">
-            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category.html"><img src="images/site/winter.jpg" class="img-rounded  " alt="img"> </a> <a class="subCategoryTitle"><span> Winter Collection </span></a></div>
+            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category-layout.html"><img src="images/site/winter.jpg" class="img-rounded  " alt="img"> </a> <a class="subCategoryTitle"><span> Winter Collection </span></a></div>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4  text-center">
-            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category.html"><img src="images/site/Male-Fragrances.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> Fragrances </span></a></div>
+            <div class="thumbnail equalheight" style="height: 133px;"> <a class="subCategoryThumb" href="sub-category-layout.html"><img src="images/site/Male-Fragrances.jpg" class="img-rounded " alt="img"> </a> <a class="subCategoryTitle"><span> Fragrances </span></a></div>
           </div>
         </div>
         <!--/.subCategoryList-->
         
-        <div class="w100 productFilter clearfix">
-          <p class="pull-left"> Showing <strong>12</strong> products </p>
-          <div class="pull-right ">
-            <div class="change-order pull-right">
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                  Sorting
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Default sorting</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sort by popularity</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sort by price: low to high</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sort by price: high to low</a></li>
-                </ul>
-              </div>
-              <select class="form-control" name="orderby" style="display: none;">
-                <option selected="selected">Default sorting</option>
-                <option value="popularity">Sort by popularity</option>
-                <option value="rating">Sort by average rating</option>
-                <option value="date">Sort by newness</option>
-                <option value="price">Sort by price: low to high</option>
-                <option value="price-desc">Sort by price: high to low</option>
-              </select>
-            </div>
-            <div class="change-view pull-right"> <a href="#" title="Grid" class="grid-view"> <i class="fa fa-th-large"></i> </a> <a href="#" title="List" class="list-view "><i class="fa fa-th-list"></i></a> </div>
-          </div>
-        </div>
         <!--/.productFilter-->
         <div class="row  categoryProduct xsResponse clearfix">
-          
+        <?php while ($item = mysql_fetch_array($item_sql)) {?>
+        
+          <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
+            <div class="product">
+            <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist" data-placement="left">
+            <i class="glyphicon glyphicon-heart"></i>
+            </a>
             
-            <?php 
-            $cat_id = $_GET['id'];
-            $sql = sprintf("SELECT * FROM items where itm_cat_id = %d order by itm_name asc", $cat_id);
-            $r = mysql_query( $sql );
-            while($item = mysql_fetch_array($r) ){ ?>
-              <div class="item col-sm-4 col-lg-4 col-md-4 col-xs-6">
-              <div class="product">
-              <a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist" data-placement="left">
-              <i class="glyphicon glyphicon-heart"></i>
-              </a>
-              <div class="image">  
-              <div class="quickview">
-                  <!-- <a title="Quick View" class="btn btn-xs  btn-quickview" data-target="#product-details-modal" data-toggle="modal"> Quick View </a> -->
-                  <a title="Quick View" class="btn btn-xs  btn-quickview"> Quick View </a>
-                 </div><a href="product-details.html"><img src="<?php echo $item['itm_ico']; ?>" alt="img" class="img-responsive"></a>
-                  <div class="promotion"> <span class="new-product">NEW</span> <span class="discount"><?php echo $item['itm_dis']; ?>% OFF</span> </div>
-                </div>
-                <div class="description">
-                  <h4><a href="product-details.html"><?php echo $item['itm_name']; ?></a></h4>
-                  <div class="grid-description">
-                    <p><?php echo $item['itm_des']; ?></p>
-                  </div>
-                  <div class="list-description">
-                    <p><?php echo $item['itm_des']; ?></p>
-                  </div>  
-                  <span class="size">XL / XXL / S </span> </div>
-                <div class="price"> <span><?php echo $item['itm_price']; ?></span> </div>
-                <div class="action-control"> <a class="btn btn-primary"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Add to cart </span> </a> </div>
+            <div class="image">  
+            <div class="quickview">
+                <a title="Quick View" class="btn btn-xs  btn-quickview" data-target="#product-details-modal" data-toggle="modal"> Quick View </a>
+               </div><?php echo "<a href='item.php?id=".$item['itm_id']."'><img src='images/itm_ico/".$item['itm_ico']."' alt='img' class='img-responsive'></a>";?>
+                <div class="promotion"> <span class="new-product"> NEW</span> <?php if($item['itm_dis'] <> 0) {echo "<span class='discount'>".$item['itm_dis']."% OFF</span>";}?> </div>
               </div>
+              <div class="description">
+                <h4><a href="items.php"><?php echo $item['itm_name'] ?></a></h4>
+                <div class="grid-description">
+                  <p><?php echo $item['itm_des'] ?></p>
+                </div>
+                <div class="list-description">
+                  <p><?php echo $item['itm_des_long'] ?></p>
+                </div>
+                </div>
+              <div class="price"> <span>$<?php echo $item['itm_price'] ?></span> </div>
             </div>
-
-          <?php } ?>
+          </div>
+          <?php }?>
           <!--/.item-->
-          
-        </div>
+          </div>
         <!--/.categoryProduct || product content end-->
         
-        <div class="w100 categoryFooter">
-          <div class="pagination pull-left no-margin-top">
-            <ul class="pagination no-margin-top">
-              <li> <a href="#">«</a></li>
-              <li class="active"><a href="#">1</a></li>
-              <li> <a href="#">2</a></li>
-              <li> <a href="#">3</a></li>
-              <li> <a href="#">4</a></li>
-              <li> <a href="#">5</a></li>
-              <li> <a href="#">»</a></li>
-            </ul>
-          </div>
           <div class="pull-right pull-right col-sm-4 col-xs-12 no-padding text-right text-left-xs">
             <p>Showing 1–450 of 12 results</p>
           </div>
@@ -545,7 +519,7 @@ require_once "nci/func.php";
 
                         <div class="cart-actions">
                             <div class="addto">
-                                <button onclick="productAddToCartForm.submit(this);" id="item-1" class="button btn-cart cart first" title="Add to Cart" type="button">Add to Cart</button>
+                                <button onclick="productAddToCartForm.submit(this);" class="button btn-cart cart first" title="Add to Cart" type="button">Add to Cart</button>
                                 <a class="link-wishlist wishlist">Add to Wishlist</a> </div>
                         </div>
                         <!--/.cart-actions-->
@@ -575,21 +549,27 @@ require_once "nci/func.php";
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <script type="text/javascript" src="ion.checkRadio-1.1.0/js/ion.checkRadio.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="js/jquery.parallax-1.1.js"></script>
+    <script src="js/jquery.minimalect.min.js"></script>
     <script>
-      //  $('.btn-quickview').live('click',function(){
-      //    $('#product-details-modal').show();
-      //    $('#product-details-modal').hide();
-      //    console.log('hello');
-      // )};
+      $(function(){
+        $(".btn-quickview").live('click',function(){
+        $("#product-details-modal).show();
+        $("#product-details-modal").hide();
+      });
 
-    $('.btn-quickview').on('click', function() {
-         $('#product-details-modal').modal();
-    });
-
-
-
-
-
+      // $('.dropdown-tree').click(function() {
+      //   $( this ).toggleClass( 'open-tree' );
+      // });
+     </script>
+     <script>
+$( ".dropdown-tree" ).click(function() {
+  $( ".category-level-2" ).slideToggle( "slow" );
+});
      </script>
   </body>
 </html>

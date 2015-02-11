@@ -13,7 +13,7 @@ if(isset($_POST['update'])){
     $sql = mysql_query("select * from items");
     while($cats = mysql_fetch_array($sql)){
         $cat_id = $cats['itm_id'];
-        //$cat_order = $_POST[$cat_id];
+        $cat_order = $_POST[$cat_id];
         if(isset($_POST['de']) && $_POST['de'] == $cat_id){
             mysql_query("delete from items where itm_id = '$cat_id'");
             mysql_query("delete from itm_images where itm_id = '$cat_id'");
