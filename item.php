@@ -106,14 +106,13 @@ header('Location: listing.php');
 		<?php
 			$p_sql= mysql_query("select * from package");
 			while($pac = mysql_fetch_array($p_sql)){ ?>
-			<div><?php echo $pac['pk_name']; ?></div>
-			<div><img src="images/package/<?php echo $pac['pk_img']; ?>" alt="package" style="width:100px;"></div>
-			<div><?php echo $pac['pk_des']; ?></div>
-			<div>Price:<?php echo $pac['pk_price']; ?></div>
-			<div><Input type = 'radio' name="select"></div>
-		</tr>
+  			<div><?php echo $pac['pk_name']; ?></div>
+  			<div><img src="images/package/<?php echo $pac['pk_img']; ?>" alt="package" style="width:100px;"></div>
+  			<div><?php echo $pac['pk_des']; ?></div>
+  			<div>Price:<?php echo $pac['pk_price']; ?></div>
+  			<div><Input type = 'radio' name="select"></div>
+
 		<?php } ?>
-		</table>
       </div>
       <!--/.color-details-->
       <h3 class="incaps"><i class="fa fa fa-check-circle-o color-in"></i> In stock</h3>
