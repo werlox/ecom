@@ -31,8 +31,8 @@ header('Location: listing.php');
     <link href="css/style1.css" rel="stylesheet">
     <link href="css/skin-1.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
-    <link href="ion.checkRadio-1.1.0/css/ion.checkRadio.css" rel="stylesheet">
-    <link href="ion.checkRadio-1.1.0/css/ion.checkRadio.cloudy.css" rel="stylesheet">
+    <!--<link href="ion.checkRadio-1.1.0/css/ion.checkRadio.css" rel="stylesheet"> -->
+    <!--<link href="ion.checkRadio-1.1.0/css/ion.checkRadio.cloudy.css" rel="stylesheet"> -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -220,6 +220,8 @@ header('Location: listing.php');
             <!-- include carousel slider plugin  -->
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/script.js"></script>
+    <!-- include smoothproducts // product zoom plugin  --> 
+    <script type="text/javascript" src="js/smoothproducts.min.js"></script>
   <!--  <script>
     $("#SimilarProductSlider").owlCarousel({
         navigation: true

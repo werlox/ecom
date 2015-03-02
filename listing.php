@@ -73,7 +73,7 @@ $item_sql = mysql_query("select * from items");
               <div class="panel-body">
                <?php $sql = mysql_query("select * from categories where cat_parent_id = 0 order by cat_order");
                   while ($catmain = mysql_fetch_array($sql)) {?>
-                <ul class="nav nav-pills nav-stacked tree">
+                <ul class="nav nav-pills nav-stacked tree accord ">
                   <li class="active dropdown-tree open-tree"> <a class="dropdown-tree-a"> <span class="badge pull-right">42</span> <?php echo $catmain['cat_name']; ?> </a>
                     <ul class="category-level-2 dropdown-menu-tree">
                       <?php 
@@ -567,9 +567,10 @@ $item_sql = mysql_query("select * from items");
       // });
      </script>
      <script>
-$( ".dropdown-tree" ).click(function() {
-  $( ".category-level-2" ).slideToggle( "slow" );
-});
+      $(function() {
+        $( ".accord" ).accordion();
+      });
+
      </script>
   </body>
 </html>
