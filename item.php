@@ -101,30 +101,43 @@ header('Location: listing.php');
         <p><?php echo $item['itm_des']; ?> </p>
       </div>
       
-      <div class="color-details"> 
-        <span class="selected-color"><strong>Package</strong></span>
-		<?php
-			$p_sql= mysql_query("select * from package");
-			while($pac = mysql_fetch_array($p_sql)){ ?>
-  			<div><?php echo $pac['pk_name']; ?></div>
-  			<div><img src="images/package/<?php echo $pac['pk_img']; ?>" alt="package" style="width:100px;"></div>
-  			<div><?php echo $pac['pk_des']; ?></div>
-  			<div>Price:<?php echo $pac['pk_price']; ?></div>
-  			<div><Input type = 'radio' name="select"></div>
 
-		<?php } ?>
+
+      <div class="color-details"> <span class="selected-color"><strong>PACKAGING</strong></span>
+        <ul class="swatches pack">
+        <?php
+          $p_sql= mysql_query("select * from package");
+          while($pac = mysql_fetch_array($p_sql)){ ?>
+          <li> 
+              <div class="packimg">
+                  <img src="images/package/<?php echo $pac['pk_img']; ?>" alt="package" style="width:100px;">
+              </div>
+              <div class="packtitle"><?php echo $pac['pk_name']; ?></div>
+              <div><?php echo $pac['pk_des']; ?></div>
+              <div class="price">Price:<?php echo $pac['pk_price']; ?></div>
+              <input name="one" class="chb" id="chb1" type="radio" />
+            <?php } ?>
+          </li>
+
+
+
+        </ul>
       </div>
       <!--/.color-details-->
-      <h3 class="incaps"><i class="fa fa fa-check-circle-o color-in"></i> In stock</h3>
-        <h3 style="display:none" class="incaps"><i class="fa fa-minus-circle color-out"></i> Out of stock</h3>
       
       <div class="productFilter productFilterLook2">
         <div class="filterBox">
-          <label>Order Quantity</label>
-          <input class="form-control"  name="qty" required>
-          
-        <div class="filterBox">
-          
+          <select>
+            <option value="strawberries" selected="">Quantity</option>
+            <option value="mango">1</option>
+            <option value="bananas">2</option>
+            <option value="watermelon">3</option>
+            <option value="grapes">4</option>
+            <option value="oranges">5</option>
+            <option value="pineapple">6</option>
+            <option value="peaches">7</option>
+            <option value="cherries">8</option>
+          </select>
         </div>
       </div>
       <!-- productFilter -->
@@ -132,6 +145,8 @@ header('Location: listing.php');
         <div class="addto">
           <button class="button btn-cart cart first" title="Add to Cart" type="button">Add to Cart</button>
           </div>
+            <h3 class="incaps"><i class="fa fa fa-check-circle-o color-in"></i> In stock</h3>
+            <h3 style="display:none" class="incaps"><i class="fa fa-minus-circle color-out"></i> Out of stock</h3>
           </div>
         
       <!--/.cart-actions-->
@@ -193,94 +208,6 @@ header('Location: listing.php');
     
   </div><!--/.row-->
 
-      <div class="row recommended">
-        <h1> YOU MAY ALOS LIKE </h1>
-
-
-      <div id="SimilarProductSlider" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
-        <div class="owl-wrapper-outer">
-          <div class="owl-wrapper" style="width: 3744px; left: 0px; display: block;">
-              <div class="owl-item" style="width: 234px;">
-                <div class="item">
-                  <div class="product"> 
-                    <a class="product-image"> <img src="images/product/a1.jpg" alt="img"> </a>
-                    <div class="description">
-                      <h4><a href="san-remo-spaghetti">YOUR LIFE</a></h4>
-                      <div class="price"> 
-                        <span>$57</span> 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="owl-item" style="width: 234px;">
-                <div class="item">
-                  <div class="product"> 
-                    <a class="product-image"> <img src="images/product/a2.jpg" alt="img"> </a>
-                    <div class="description">
-                      <h4><a href="san-remo-spaghetti">RED CROWN</a></h4>
-                      <div class="price"> <span>$44</span> </div>
-                    </div>
-                  </div>
-                </div>
-                </div><div class="owl-item" style="width: 234px;"><div class="item">
-        <div class="product"> <a class="product-image"> <img src="images/product/a3.jpg" alt="img"> </a>
-          <div class="description">
-            <h4><a href="san-remo-spaghetti">WHITE GOLD</a></h4>
-            <div class="price"> <span>$35</span></div>
-          </div>
-        </div>
-      </div></div><div class="owl-item" style="width: 234px;"><div class="item">
-        <div class="product"> <a class="product-image"> <img src="images/product/a4.jpg" alt="img"> </a>
-          <div class="description">
-            <h4><a href="san-remo-spaghetti">DENIM 4240</a></h4>
-            <div class="price"> $<span>55</span></div>
-          </div>
-        </div>
-      </div></div><div class="owl-item" style="width: 234px;"><div class="item">
-        <div class="product"> <a class="product-image"> <img src="images/product/30.jpg" alt="img"> </a>
-          <div class="description">
-            <h4><a href="san-remo-spaghetti">CROWN ROCK</a></h4>
-            <div class="price"> <span>$500</span> </div>
-          </div>
-        </div>
-      </div></div><div class="owl-item" style="width: 234px;"><div class="item">
-        <div class="product"> <a class="product-image"> <img src="images/product/a5.jpg" alt="img"> </a>
-          <div class="description">
-            <h4><a href="san-remo-spaghetti">SLIM ROCK</a></h4>
-            <div class="price"> <span>$50 </span> </div>
-          </div>
-        </div>
-      </div></div><div class="owl-item" style="width: 234px;"><div class="item">
-        <div class="product"> <a class="product-image"> <img src="images/product/36.jpg" alt="img"> </a>
-          <div class="description">
-            <h4><a href="san-remo-spaghetti">ROCK T-Shirts </a></h4>
-            <div class="price"> <span>$130</span> </div>
-          </div>
-        </div>
-      </div></div><div class="owl-item" style="width: 234px;"><div class="item">
-        <div class="product"> <a class="product-image"> <img src="images/product/13.jpg" alt="img"> </a>
-          <div class="description">
-            <h4><a href="san-remo-spaghetti">Denim T-Shirts </a></h4>
-            <div class="price"> <span>$43</span> </div>
-          </div>
-        </div>
-      </div></div></div></div><!--/.item-->
-      
-      <!--/.item-->
-      
-      <!--/.item-->
-      
-      <!--/.item-->
-      
-      <!--/.item-->
-      
-      <!--/.item-->
-      
-      <!--/.item-->
-      
-      <!--/.item-->
-      <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div><div class="owl-buttons"><div class="owl-prev">prev</div><div class="owl-next">next</div></div></div>
       </div>
       </div>
       </div>
